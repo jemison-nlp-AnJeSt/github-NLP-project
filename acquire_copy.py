@@ -28,6 +28,8 @@ from env import github_token, github_username
 REPOS = [
 ]
 
+SEARCH = ['ubuntu', 'arch+linux', 'debian']
+
 headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
 
 if headers["Authorization"] == "token " or headers["User-Agent"] == "":
@@ -35,18 +37,18 @@ if headers["Authorization"] == "token " or headers["User-Agent"] == "":
         "You need to follow the instructions marked TODO in this script before trying to use it"
     )
     
-def github_api_query(page):
-    url = f"https://api.github.com/search/repositories?q=ubuntu&s=forks&page={page}&per_page=100"
+def github_api_query(page, distro):
+    url = f"https://api.github.com/search/repositories?q={distro}&s=forks&page={page}&per_page=100"
     response = requests.get(url, headers=headers)
     return response.json()
 
-def get_links():
+def get_links(disto):
     urls = []
     i = 0
     while True:
         print(f"page{i}")
         try:
-            req = github_api_query(page=i)
+            req = github_api_query(page=i, distro=distro)
             for item in req['items']:
                 url = item['html_url']
                 urls.append(url[19:])
@@ -113,7 +115,7 @@ def process_repo(repo: str) -> Dict[str, str]:
     """
     contents = get_repo_contents(repo)
     readme_download_url = get_readme_download_url(contents)
-    if readme_download_url == "":
+    if (readme_download_url == "") or (readme_download_url is None):
         readme_contents = ""
     else:
         readme_contents = requests.get(readme_download_url).text
@@ -133,6 +135,7 @@ def scrape_github_data() -> List[Dict[str, str]]:
 
 
 if __name__ == "__main__":
-    REPOS = get_links()
+    distro = SEARCH[1]
+    REPOS = get_links(distro)
     data = scrape_github_data()
-    json.dump(data, open("data.json", "w"), indent=1)
+    json.dump(data, open(f"{distro}_data.json", "w"), indent=1)
