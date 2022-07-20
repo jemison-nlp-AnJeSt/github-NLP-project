@@ -1,4 +1,10 @@
 env.py
+<<<<<<< HEAD
 
 
 
+=======
+.DS_Store
+.ipynb_checkpoints/
+__pycache__
+>>>>>>> e6b18c9c4205dea1d994b08de047897cb416930b
