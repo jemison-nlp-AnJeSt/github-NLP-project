@@ -1,5 +1,9 @@
 # Constants for the NLP project
 
+import nltk
+import unicodedata
+import re
+
 ADDITIONAL_STOPWORDS = [
     'sudo',
     'distro',
@@ -16,7 +20,7 @@ ADDITIONAL_STOPWORDS = [
 
 def clean_data(text):
     ps = nltk.porter.PorterStemmer()
-    stopwords = nltk.corpus.stopwords.words('english') + c.ADDITIONAL_STOPWORDS
+    stopwords = nltk.corpus.stopwords.words('english') + ADDITIONAL_STOPWORDS
     text = (unicodedata.normalize('NFKD', text)
              .encode('ascii', 'ignore')
              .decode('utf-8', 'ignore')
