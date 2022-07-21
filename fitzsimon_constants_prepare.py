@@ -15,8 +15,24 @@ ADDITIONAL_STOPWORDS = [
     'archlinux',
     'git',
     'root',
-    'img'
-] 
+    'img',
+    'instal',
+    'use',
+    'user',
+    'packag',
+    'file',
+    'run',
+    'system',
+    'configur',
+    'script',
+    'set',
+    'build',
+    'need',
+    'make',
+    'option',
+    'creat',
+    'default'
+]
 
 def clean_data(text):
     ps = nltk.porter.PorterStemmer()
@@ -28,4 +44,7 @@ def clean_data(text):
     words = re.sub(r'[\(<\"]?http.*[\)>\"\s]', ' ', text).split()
     words = [re.sub(r'[^\w\s]', '', text) for text in words]
     words = [word for word in words if word!='']
-    return [ps.stem(word) for word in words if word not in stopwords]
+    words = [word for word in words if word not in stopwords]
+    words = [ps.stem(word) for word in words]
+    words = [ps.stem(word) for word in words if word not in stopwords]
+    return words
