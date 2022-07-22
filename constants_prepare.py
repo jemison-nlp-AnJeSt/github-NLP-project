@@ -73,3 +73,8 @@ def clean_data(text):
     words = [ps.stem(word) for word in words]
     words = [ps.stem(word) for word in words if word not in stopwords]
     return words   
+
+def adding_columns(df):
+    df['clean_readme'] = df.readme_contents.apply(clean_data)
+    df['length_of_readme'] = df['readme_contents'].apply(lambda r : len(clean_data(r)))
+    return df
