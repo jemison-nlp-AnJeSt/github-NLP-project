@@ -3,6 +3,7 @@
 import nltk
 import re
 import unicodedata
+import json
 
 ADDITIONAL_STOPWORDS = [
     'sudo',
@@ -34,10 +35,15 @@ ADDITIONAL_STOPWORDS = [
     'default'
 ]
 
+def get_stopwords_from_file():
+    with open('high_freq_stopwords.json', 'r') as f:
+        add_stop_words_list = json.load(f)
+    return list(add_stop_words_list.values())
+
 def clean_data(text):
     ps = nltk.porter.PorterStemmer()
-    stopwords = nltk.corpus.stopwords.words('english') + ADDITIONAL_STOPWORDS
-    text = (unicodedata.normalize('NFKD', text)
+    stopwords = nltk.corpus.stopwords.words('english') + get_stopwords_from_file()
+    text = (unicodedata.normalize('NFKD', str(text))
              .encode('ascii', 'ignore')
              .decode('utf-8', 'ignore')
              .lower())
