@@ -41,10 +41,10 @@ In this NLP project, our team has scraped the top 3300 most-forked Linux-specifi
 > Since we have 3300 scraped repositories, we will be normalizing these by:<br>
 - 1) dropping nulls (as these are repositories that have no listed languages)
 - 2) using NLTK tools to drop odd symbols, https-related content, tokenize the data to parse the words/grams more, and once our stopwords are found we will be stemming our entire corpus.
-- 3) Our exploration is first, centered around seeing any individual differences or commonalities of the three Linux flavors and then we combined these to for our overall main corpus to model on. 
-- 4) In exploration of the main corpus, we intend to find common words that we can include in our stopwords list (to get more finite in our search for predictabily between programming languages).
-- 5) We then will take what we have found in our main corpus and prepare the NLP dataset by using TF-IDF to turn the predictive words found into numbers/frequencies so that we can model using the new numbered data.
-- 6) Once we find a viable Most Viable Product, we will work together to decide if anything else could be added to this model and then also determine if we would want to break the model down per Linux flavor that we acquired. 
+> Our exploration is first, centered around seeing any individual differences or commonalities of the three Linux flavors and then we combined these to for our overall main corpus to model on. <br><br>
+> In exploration of the main corpus, we intend to find common words that we can include in our stopwords list (to get more finite in our search for predictabily between programming languages).<br><br>
+> We then will take what we have found in our main corpus and prepare the NLP dataset by using TF-IDF to turn the predictive words found into numbers/frequencies so that we can model using the new numbered data.<br><br>
+> Once we find a viable Most Viable Product, we will work together to decide if anything else could be added to this model and then also determine if we would want to break the model down per Linux flavor that we acquired. 
 
 #### Initial Hypotheses
 > - **Hypothesis 1 -**
