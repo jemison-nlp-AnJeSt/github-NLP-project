@@ -8,16 +8,16 @@ In this NLP project, our team has scraped the top 3300 most-forked Linux-specifi
 
 ### Initial Questions
 
-> How many unique words are there to each specific programming language?
-> Are there any bigrams/trigrams that are specific to certain programming languages?
-> Are there differences in words/phrases to Linux-flavors- specifically Ubuntu, Debian and Archlinux.
-> Do certain programming languages have larger README sections than others? And if so, which ones?
-> With Linux-flavors-Debian, Arch and Ubuntu-are there differences in README lengths? (ie does one flavor over the others seem to have more details needed or explained than others?)
+> - How many unique words are there to each specific programming language?<br>
+> - Are there any bigrams/trigrams that are specific to certain programming languages?<br>
+> - Are there differences in words/phrases to Linux-flavors- specifically Ubuntu, Debian and Archlinux.<br>
+> - Do certain programming languages have larger README sections than others? And if so, which ones?<br>
+> - With Linux-flavors-Debian, Arch and Ubuntu-are there differences in README lengths? (ie does one flavor over the others seem to have more details needed or explained than others?)
 
 #### Project Objectives
-> To build a function that can automatically scrape the top-forked Github repositiories that are on Linux and the Linux-flavors: Ubuntu, Debian and Arch.
-> To explore and find any differences of these repositories key words and the languages used within the repositories.
-> To then build a model to that can predict what language a repository is using, based on the key words within the README sections. 
+> - To build a function that can automatically scrape the top-forked Github repositiories that are on Linux and the Linux-flavors: Ubuntu, Debian and Arch.<br>
+> - To explore and find any differences of these repositories key words and the languages used within the repositories.<br>
+> - To then build a model to that can predict what language a repository is using, based on the key words within the README sections. 
 #### Data Dictionary
 >
 >
@@ -28,7 +28,7 @@ In this NLP project, our team has scraped the top 3300 most-forked Linux-specifi
 | language | 2805 non-null: object | programming language used in repo |
 | readme_contents| 2805 non-null: object | words and phrases within the readme |
 | clean_readme| 2805 non-null: object | contents of readme after data has been cleaned/normalized|
-| lenght_of_readme | 2805 non-null: int64 | how many words are in the repo |
+| length_of_readme | 2805 non-null: int64 | how many words are in the repo |
 
 
 #### Goals and our Why of this project
@@ -36,8 +36,8 @@ In this NLP project, our team has scraped the top 3300 most-forked Linux-specifi
 >
 >
 ##### Plan
-> We plan to use the Codeup's webscraper acquire function and obtain our own Github tokens to webscrape the top-forked Linux repos.
-> We have decided to subdivide our search into three common Linux flavors: Ubuntu, Arch and Debian. We did this to also see if we could find any commonalities/difference between these flavors and the programming lanuguages used.<br>
+> We plan to use the Codeup's webscraper acquire function and obtain our own Github tokens to webscrape the top-forked Linux repos.<br><br>
+> We have decided to subdivide our search into three common Linux flavors: Ubuntu, Arch and Debian. We did this to also see if we could find any commonalities/difference between these flavors and the programming lanuguages used.<br><br>
 > Since we have 3300 scraped repositories, we will be normalizing these by:<br>
 - 1) dropping nulls (as these are repositories that have no listed languages)
 - 2) using NLTK tools to drop odd symbols, https-related content, tokenize the data to parse the words/grams more, and once our stopwords are found we will be stemming our entire corpus.
