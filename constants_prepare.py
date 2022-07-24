@@ -77,4 +77,6 @@ def clean_data(text):
 def adding_columns(df):
     df['clean_readme'] = df.readme_contents.apply(clean_data)
     df['length_of_readme'] = df['readme_contents'].apply(lambda r : len(clean_data(r)))
+    df['readme_string'] = df['clean_readme'].apply(lambda x: ','.join(map(str, x)))
+
     return df
