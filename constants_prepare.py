@@ -28,6 +28,7 @@ ADDITIONAL_STOPWORDS = [
     'archlinux',
     'git',
     'root',
+    'image',
     'img',
     'instal',
     'use',
@@ -52,8 +53,8 @@ def get_stopwords_from_file():
     difference or less of similarity between programming languages
     And adds these words onto the stopwords list"""
     with open('high_freq_stopwords.json', 'r') as f:
-        add_stop_words_list = json.load(f)
-    return list(add_stop_words_list.values())
+        add_stop_words_list = json.load(f) 
+    return list(add_stop_words_list.values())+ ADDITIONAL_STOPWORDS
 
 
 def clean_data(text):
