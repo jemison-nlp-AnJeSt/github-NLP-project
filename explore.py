@@ -255,7 +255,7 @@ def debian_corpus(df_debian):
     This function takes in the df_debian DataFrame and returns out a complete corpus list for resos in the debian subset.
     '''
     debian_corpus = ' '.join(df_debian['readme_contents'])
-    return debian_corpus_list = c.clean_data(debian_corpus)
+    return c.clean_data(debian_corpus)
 
 def debian_unique_words_by_lang(df_debian):
     '''
