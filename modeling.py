@@ -9,6 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+from sklearn.ensemble import BaggingClassifier
 
 import nltk
 import re
@@ -63,21 +64,42 @@ def model_maker(train, validate):
     for i in range(1, 25):
         outputs.append(make_knn_model(train, validate, i))
         outputs.append(make_decision_tree_model(train, validate, i))
-    rand_forest_params = return_product(5, 5, 5)
+    rand_forest_params = return_product(3, 5, 4)
     print('starting rf and et')
     for prod in rand_forest_params:
         #print('making rf and et')
         outputs.append(make_random_forest_model(train, validate, leaf=prod[0], depth=prod[1], trees = prod[2]))
         outputs.append(make_extra_trees_model(train, validate, leaf=prod[0], depth=prod[1], trees = prod[2]))
     print('finished rf and et')
+    estimators = [
+        {'model':LogisticRegression(), 'name':'LogisticRegression'},
+        {'model':KNeighborsClassifier(), 'name':'KNeighborsClassifier'},
+        {'model':DecisionTreeClassifier(), 'name':'DecisionTreeClassifier'},
+        {'model':ExtraTreesClassifier(), 'name':'ExtraTreesClassifier'}
+    ]
+    for estimator in estimators:
+        outputs.append(make_bagging_classifier(train, validate, estimator['model'], estimator['name']))
     return pd.DataFrame(outputs)
 
-def test_models(train, validate):
-    outputs = []
-    for i in range(1, 25):
-        print(f"testing k = {i}")
-        outputs.append(make_knn_model(train, validate, i))
-    return pd.DataFrame(outputs)
+def test_model(train, validate, test, baseline_acc = BASELINE_ACCURACY):
+    X_train, y_train, X_val, y_val = make_X_y_df(train, validate)
+    _, _, X_test, y_test = make_X_y_df(train, test)
+    bc = BaggingClassifier(base_estimator=DecisionTreeClassifier(), n_estimators = 20, max_samples = 0.5, max_features = 0.5, bootstrap=False, random_state = RAND_SEED).fit(X_train, y_train['language'])
+    y_train['predicted'] = bc.predict(X_train)
+    y_val['predicted'] = bc.predict(X_val)
+    y_test['predicted'] = bc.predict(X_test)
+    metrics_dict = metrics.classification_report(y_train['language'], y_train['predicted'], output_dict=True, zero_division=True)
+    metrics_dict_val = metrics.classification_report(y_val['language'], y_val['predicted'], output_dict=True, zero_division=True)
+    metrics_dict_test = metrics.classification_report(y_test['language'], y_test['predicted'], output_dict=True, zero_division=True)
+    output = {
+        'model':'BaggingClassifier',
+        'attributes':f'estimator = DecisionTreeClassifier',
+        'train_accuracy': metrics_dict['accuracy'],
+        'validate_accuracy': metrics_dict_val['accuracy'],
+        'test_accuracy':metrics_dict_test['accuracy'],
+        'better_than_baseline':metrics_dict_test['accuracy'] > baseline_acc
+    }
+    return pd.DataFrame([output])
 
 ### UTILITY FUNCTIONS
 
@@ -136,6 +158,22 @@ def return_product(l, d, t):
     return product_output
 
 ### MODEL MAKERS
+
+def make_bagging_classifier(train, validate, estimator, estimator_name, baseline_acc = BASELINE_ACCURACY):
+    X_train, y_train, X_val, y_val = make_X_y_df(train, validate)
+    bc = BaggingClassifier(base_estimator=estimator, n_estimators = 20, max_samples = 0.5, max_features = 0.5, bootstrap=False, random_state = RAND_SEED).fit(X_train, y_train['language'])
+    y_train['predicted'] = bc.predict(X_train)
+    y_val['predicted'] = bc.predict(X_val)
+    metrics_dict = metrics.classification_report(y_train['language'], y_train['predicted'], output_dict=True, zero_division=True)
+    metrics_dict_val = metrics.classification_report(y_val['language'], y_val['predicted'], output_dict=True, zero_division=True)
+    output = {
+        'model':'BaggingClassifier',
+        'attributes':f'estimator = {estimator_name}',
+        'train_accuracy': metrics_dict['accuracy'],
+        'validate_accuracy': metrics_dict_val['accuracy'],
+        'better_than_baseline':metrics_dict['accuracy'] > baseline_acc and metrics_dict_val['accuracy'] > baseline_acc
+    }
+    return output
 
 def make_log_reg_model(train, validate, baseline_acc = BASELINE_ACCURACY):
     X_train, y_train, X_val, y_val = make_X_y_df(train, validate)
