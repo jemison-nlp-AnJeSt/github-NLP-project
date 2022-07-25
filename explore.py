@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+import constants_prepare as c
 import nltk
 
 #visualizations:
@@ -229,4 +229,175 @@ def arch_corpus(arch_df):
     arch_corpus = pd.Series(arch_corpus_list)
     return arch_corpus
 
+def arch_top_10(arch_corpus):
+    '''
+    This function takes in arch_corpus and creates a bar graph displaying the top 10 words in the arch corpus.
+    '''
+    arch_corpus.value_counts().head(10).sort_values().plot.barh()
 
+def top_3_arch_trigrams(arch_corpus):
+    '''
+    This function takes in arch_corpus and returns a Pandas Series containing the top 3 trigrams in the arch corpus.
+    '''
+    return (pd.Series(nltk.ngrams(arch_corpus, 3)).value_counts().head(3)) 
+
+def debian_subset():
+    '''
+    This function uses the debian_data json file to get a subset of data for only debian linux distributions. It returns out the 
+    data as a Pandas DataFrame object.
+    '''
+    df_debian = pd.read_json('debian_data.json')
+    df_debian = df_debian[df_debian.language.notnull()]
+    return df_debian
+
+def debian_corpus(df_debian)
+    '''
+    This function takes in the df_debian DataFrame and returns out a complete corpus list for resos in the debian subset.
+    '''
+    debian_corpus = ' '.join(df_debian['readme_contents'])
+    return debian_corpus_list = c.clean_data(debian_corpus)
+
+def debian_unique_words_by_lang(df_debian):
+    '''
+    This function takes in df_debian and returns a dataframes that shows the unique word information split by language for resos
+    in the debian subset.
+    '''
+    df_debian['clean_readme'] = df_debian.readme_contents.apply(c.clean_data)
+    df_debian['total_unique_words'] = df_debian['clean_readme'].apply(lambda r : pd.Series(r).nunique())
+    df_debian.groupby('language').total_unique_words.describe().sort_values('count', ascending=False).head(10)
+
+def ubuntu_subset():
+    '''This function uses the ubuntu_data json file to get a subset of data for only ubuntu linux distributions. It returns out the 
+    data as a Pandas DataFrame object.
+     '''
+    #calling in df
+    ubuntu = pd.read_json('ubuntu_data.json')
+    #adding on cleaned/normalized data column:
+    ubuntu['cleaned_readme'] = ubuntu.readme_contents.apply(c.clean_data)
+    #adding on cleaned repo length
+    ubuntu['cleaned_length'] = 0
+    for i in range(len(ubuntu.cleaned_readme)):
+        ubuntu['cleaned_length'][i] = len(ubuntu.cleaned_readme[i])
+    ubuntu.head()
+    return ubuntu.dropna().reset_index()
+
+def top_3_langs_ubuntu(ubuntu):
+    '''
+    This function takes in ubuntu and returns a Pandas Series containing the top 3 languages and their percentages.
+    '''
+    return ubuntu.language.value_counts(normalize=True).head(3)
+
+def ubuntu_corpus(ubuntu):
+    '''
+    This function pulls in ubuntu and returns out a Pandas Series containing the words of the ubuntu linux corpus.
+    '''
+    ubuntu_corpus_list = []
+    language = []
+    for entry in range(len(ubuntu.readme_contents)):
+        language.append(ubuntu.language[entry])
+        ubuntu_corpus_list.extend(c.clean_data(ubuntu.readme_contents[entry]))
+    return pd.Series(ubuntu_corpus_list)
+
+def ubuntu_top_10_bigrams(ubuntu_corpus):
+    '''
+    This function takes in the ubuntu_corpus and returns out a Pandas Series containing the top 10 bigrams.
+    '''
+    return (pd.Series(nltk.ngrams(ubuntu_corpus, 2)).value_counts().head(10))
+
+def ubuntu_top_50_bigram_wordcloud(ubuntu_corpus):
+    '''
+    This function takes in the ubuntu_corpus, finds the top 50 bigrams and their frequency and then displays a wordcloud of the bigrams.
+    '''
+    top_50_ubuntu_bigrams = (pd.Series(nltk.ngrams(ubuntu_corpus, 2)).value_counts().head(50))
+
+    data = {k[0] + ' ' + k[1]: v for k, v in top_50_ubuntu_bigrams.to_dict().items()}
+    img = WordCloud(background_color='white', width=800, height=400).generate_from_frequencies(data)
+    plt.figure(figsize=(8, 4))
+    plt.imshow(img)
+    plt.axis('off')
+    plt.show()
+
+
+
+def hypothesis_1_viz_1(master_df):
+    '''
+    This function takes in the master_df dataframe and displays a violinplot comparing the length of readmes for each distro.
+    '''
+    plt.figure(figsize=(12,7))
+    sns.violinplot(data = master_df, y = 'length_of_readme', x = 'distro', palette = 'flare')
+    plt.axhline(master_df.length_of_readme.mean(), color = '#0372CB')
+    plt.ylim(0, 3500)
+    plt.show()
+
+def hypothesis_1_variables(master_df):
+    '''
+    This function sets variables to be used in the first hypothesis test and elsewhere.
+    
+    Returns:    alpha - the alpha value to be used in hypothesis testing
+                ubuntu - a subset dataframe containing only info on the ubuntu repos.
+                debian - a subset dataframe containing only info on the debian repos.
+                arch - a subset dataframe containing only info on the arch repos.
+                non_ubuntu - a subset dataframe containing only info on the non_ubuntu repos.
+    '''
+    # Setting alpha
+    alpha = .05
+
+    # Setting variables
+    ubuntu = master_df[master_df.distro == 'ubuntu']
+    debian = master_df[master_df.distro == 'debian']
+    arch = master_df[master_df.distro == 'arch']
+    non_ubuntu = master_df[master_df.distro != 'ubuntu']
+
+    return alpha, ubuntu, debian, arch, non_ubuntu
+
+def hypothesis_1_viz_2(non_ubuntu, ubuntu):
+    '''
+    This function takes in the non_ubuntu and ubuntu subset dataframes and does a histplot of the values to compare length of readmes
+    across the two subsets.
+    '''
+    #Visualization of these results
+    plt.figure(figsize=(18,8))
+    sns.histplot(data = non_ubuntu.length_of_readme, bins = 290, color = 'red', label = 'non-ubuntu', stat = 'percent')
+    sns.histplot(data = ubuntu.length_of_readme, bins = 274, label = 'ubuntu', stat = 'percent')
+    plt.xlim(0, 3000)
+    plt.legend()
+    plt.show()
+
+def hypothesis_2_variables(arch, debian, ubuntu):
+    '''
+    This function takes in the arch, debian and ubuntu subsets and finds how many repos use each of the following languages when split
+    but specific distribution: Shell, Python, C, and other langauges.
+    
+    Returns:    observed - a dataframe containing number of instances of language by distribution
+    '''
+    # Setting corpus variables
+    arch_language_nums = [len(arch.query("language == 'Shell'")), 
+                        len(arch.query("language == 'Python'")), 
+                        len(arch.query("language == 'C'")),
+                        len(arch.query("language !='Shell' & language != 'Python' & language != 'C'"))]
+
+    debian_language_nums = [len(debian.query("language == 'Shell'")), 
+                        len(debian.query("language == 'Python'")), 
+                        len(debian.query("language == 'C'")),
+                        len(debian.query("language !='Shell' & language != 'Python' & language != 'C'"))]
+
+    ubuntu_language_nums = [len(ubuntu.query("language == 'Shell'")), 
+                        len(ubuntu.query("language == 'Python'")), 
+                        len(ubuntu.query("language == 'C'")),
+                        len(ubuntu.query("language !='Shell' & language != 'Python' & language != 'C'"))]
+    observed = pd.DataFrame([arch_language_nums, debian_language_nums, ubuntu_language_nums], 
+                            columns = ['Shell', 'Python', "C", "Other Langauges"], 
+                            index = ['Arch', 'Debian', 'Ubuntu'])
+    return observed
+
+def hypothesis_2_viz(observed):
+    '''
+    This function takes in the observed dataframe and displays a stacked bar plot of the information in the dataframe.
+    '''
+    sns.set(style='white')
+    observed.plot(kind= 'barh', stacked=True, color=['#1319FF', '#FF138F', '#FFA613', '#13FF83'], figsize = (18,8))
+    plt.legend()
+    plt.title('Langauges by Linux Distro', fontsize=16)
+    plt.xlabel('Number of repos with Language')
+    plt.ylabel('Linux Flavor')
+    plt.show()
