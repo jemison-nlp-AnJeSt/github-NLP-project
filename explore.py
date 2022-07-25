@@ -265,7 +265,8 @@ def debian_unique_words_by_lang(df_debian):
     df_debian['clean_readme'] = df_debian.readme_contents.apply(c.clean_data)
     df_debian['total_unique_words'] = df_debian['clean_readme'].apply(lambda r : pd.Series(r).nunique())
     df_debian.groupby('language').total_unique_words.describe().sort_values('count', ascending=False).head(10)
-
+    return df_debian
+    
 def ubuntu_subset():
     '''This function uses the ubuntu_data json file to get a subset of data for only ubuntu linux distributions. It returns out the 
     data as a Pandas DataFrame object.
