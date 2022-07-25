@@ -250,7 +250,7 @@ def debian_subset():
     df_debian = df_debian[df_debian.language.notnull()]
     return df_debian
 
-def debian_corpus(df_debian)
+def debian_corpus(df_debian):
     '''
     This function takes in the df_debian DataFrame and returns out a complete corpus list for resos in the debian subset.
     '''
