@@ -52,7 +52,7 @@ def get_stopwords_from_file():
     """This function takes in the 5,000 top words that have a 1%
     difference or less of similarity between programming languages
     And adds these words onto the stopwords list"""
-    with open('high_freq_stopwords.json', 'r') as f:
+    with open('data/high_freq_stopwords.json', 'r') as f:
         add_stop_words_list = json.load(f) 
     return list(add_stop_words_list.values())+ ADDITIONAL_STOPWORDS
 

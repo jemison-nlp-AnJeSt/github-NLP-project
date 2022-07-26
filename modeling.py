@@ -68,7 +68,7 @@ def make_model_dfs(df):
     train, validate, test = split_data(df)
     return train, validate, test
 
-def model_maker(train, validate, baseline_acc):
+def model_maker(train, validate, baseline_acc = BASELINE_ACCURACY):
     """
     Makes a mass of models and returns a dataframe with accuracy metric
     """
@@ -153,7 +153,7 @@ def get_stopwords_from_file():
     """
     Gets list of high frequency words
     """
-    with open('high_freq_stopwords.json', 'r') as f:
+    with open('data/high_freq_stopwords.json', 'r') as f:
         add_stop_words_list = json.load(f)
     return list(add_stop_words_list.values())
 
