@@ -32,11 +32,6 @@ You can view our team's presentation deck here: <a href="https://www.canva.com/d
 | clean_readme| 2805 non-null: object | contents of readme after data has been cleaned/normalized|
 | length_of_readme | 2805 non-null: int64 | how many words are in the repo |
 
-
-#### Goals and our Why of this project
->
->
->
 ##### Plan
 > We plan to use the Codeup's webscraper acquire function and obtain our own GitHub tokens to webscrape the top-forked Linux repos.<br><br>
 > We have decided to subdivide our search into three common Linux flavors: Ubuntu, Arch and Debian. We did this to also see if we could find any commonalities/difference between these flavors and the programming languages used.<br><br>
@@ -63,7 +58,13 @@ Raspberry Pi will show up and be associated with Python language.
 
 
 ### Executive Summary - Conclusions & Next Steps
+Using the data, we found there were significant differences between the repos. Specifically in languages, README size, and unique words.
 
+In exploration, we found that Shell, Python and C were the most used languages. During this exploration phase, we also noticed large overlap in common words that we then took out almost 1,600 words by adding them to our stopwords list.
+
+During the modeling stage, we found that Bagging Classifier using an underlying Decision Tree provided the best train/validate accuracy. Upon testing on out-of-sample-data, the model beat baseline by 13%. The model is overfitting which could be mitigated by changing how the data is vectorized and/or how the model is sampling the data for the estimators.
+
+Our next steps would be to continue to experiment with hyperparameters, such as finding other common words to include in stopwords to find unique occurrences within the data acquired and to also pull more data for the model. We also would want to try changing the model to predict on the top 3 most used languages, versus our current model that predicts on the top 10.
 
 
 <hr style="border-top: 10px groove blueviolet; margin-top: 1px; margin-bottom: 1px"></hr>
