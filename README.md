@@ -3,7 +3,7 @@
 
 ### Project Summary 
 
-In this NLP project, our team has scraped the top 3300 most-forked Linux-specific Github repositories to determine if we could build a model that can predict what programming lanugage a respository is using, based on the words contained with the README section. 
+In this NLP project, our team has scraped the top 3300 most-forked Linux-specific GitHub repositories to determine if we could build a model that can predict what programming language a repository  is using, based on the words contained with the README section. 
 <hr style="border-top: 10px groove blueviolet; margin-top: 1px; margin-bottom: 1px"></hr>
 
 ### Initial Questions
@@ -15,7 +15,7 @@ In this NLP project, our team has scraped the top 3300 most-forked Linux-specifi
 > - With Linux-flavors-Debian, Arch and Ubuntu-are there differences in README lengths? (ie does one flavor over the others seem to have more details needed or explained than others?)
 
 #### Project Objectives
-> - To build a function that can automatically scrape the top-forked Github repositiories that are on Linux and the Linux-flavors: Ubuntu, Debian and Arch.<br>
+> - To build a function that can automatically scrape the top-forked Github repositories that are on Linux and the Linux-flavors: Ubuntu, Debian and Arch.<br>
 > - To explore and find any differences of these repositories key words and the languages used within the repositories.<br>
 > - To then build a model to that can predict what language a repository is using, based on the key words within the README sections. 
 #### Data Dictionary
@@ -36,13 +36,13 @@ In this NLP project, our team has scraped the top 3300 most-forked Linux-specifi
 >
 >
 ##### Plan
-> We plan to use the Codeup's webscraper acquire function and obtain our own Github tokens to webscrape the top-forked Linux repos.<br><br>
-> We have decided to subdivide our search into three common Linux flavors: Ubuntu, Arch and Debian. We did this to also see if we could find any commonalities/difference between these flavors and the programming lanuguages used.<br><br>
+> We plan to use the Codeup's webscraper acquire function and obtain our own GitHub tokens to webscrape the top-forked Linux repos.<br><br>
+> We have decided to subdivide our search into three common Linux flavors: Ubuntu, Arch and Debian. We did this to also see if we could find any commonalities/difference between these flavors and the programming languages used.<br><br>
 > Since we have 3300 scraped repositories, we will be normalizing these by:<br>
 - 1) dropping nulls (as these are repositories that have no listed languages)
 - 2) using NLTK tools to drop odd symbols, https-related content, tokenize the data to parse the words/grams more, and once our stopwords are found we will be stemming our entire corpus.
 > Our exploration is first, centered around seeing any individual differences or commonalities of the three Linux flavors and then we combined these to for our overall main corpus to model on. <br><br>
-> In exploration of the main corpus, we intend to find common words that we can include in our stopwords list (to get more finite in our search for predictabily between programming languages).<br><br>
+> In exploration of the main corpus, we intend to find common words that we can include in our stopwords list (to get more finite in our search for predictably between programming languages).<br><br>
 > We then will take what we have found in our main corpus and prepare the NLP dataset by using TF-IDF to turn the predictive words found into numbers/frequencies so that we can model using the new numbered data.<br><br>
 > Once we find a viable Most Viable Product, we will work together to decide if anything else could be added to this model and then also determine if we would want to break the model down per Linux flavor that we acquired. 
 
@@ -54,7 +54,7 @@ We believe that because these are Linux repositories, Shell will be the top prog
 In differences of flavors, Archlinux will have more programming; less Shell than Ubuntu & Debian. 
 
 > - **Hypothesis 3 -**
-We have a theory that Ubuntu READMe’s may have more detail and length for new users.
+We have a theory that Ubuntu readme files may have more detail and length for new users.
 
 > - **Hypothesis 4-**
 Raspberry Pi will show up and be associated with Python language.
@@ -71,10 +71,10 @@ Raspberry Pi will show up and be associated with Python language.
 
 <hr style="border-top: 10px groove blueviolet; margin-top: 1px; margin-bottom: 1px"></hr>
 
-In order to reproduce this project you will need all the necessary files listed below to run the final project notebook. 
+In order to reproduce this project, you will need all the necessary files listed below to run the final project notebook. 
 - [x] Read this README.md
 - [ ] Have loaded all common DS libraries
-- [ ] Download our aquired data stored in json or csv files [arch_linux_data.json, debian_data.json, high_freq_stopwords.json, master_df.json, ubuntu_data.json]
+- [ ] Download our acquired data stored in json or csv files [arch_linux_data.json, debian_data.json, high_freq_stopwords.json, master_df.json, ubuntu_data.json]
 - [ ] Download all helper function files [constants_prepare.py, explore.py, moddel.py]
 - [ ] Scrap notebooks (if desired, to dive deeper)
 - [ ] Run the final report
