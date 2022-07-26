@@ -71,10 +71,10 @@ Raspberry Pi will show up and be associated with Python language.
 
 <hr style="border-top: 10px groove blueviolet; margin-top: 1px; margin-bottom: 1px"></hr>
 
-You will need all the necessary files listed below to run my final project notebook. 
+In order to reproduce this project you will need all the necessary files listed below to run the final project notebook. 
 - [x] Read this README.md
-- [ ] Access to CodeUp MySql server
 - [ ] Have loaded all common DS libraries
-- [ ] Download all helper function files [acquire.py, wrangle.py, explore.py]
+- [ ] Download our aquired data stored in json or csv files [arch_linux_data.json, debian_data.json, high_freq_stopwords.json, master_df.json, ubuntu_data.json]
+- [ ] Download all helper function files [constants_prepare.py, explore.py, moddel.py]
 - [ ] Scrap notebooks (if desired, to dive deeper)
 - [ ] Run the final report
