@@ -74,7 +74,7 @@ Raspberry Pi will show up and be associated with Python language.
 In order to reproduce this project, you will need all the necessary files listed below to run the final project notebook. 
 - [x] Read this README.md
 - [ ] Have loaded all common DS libraries
-- [ ] Download our acquired data stored in json or csv files [arch_linux_data.json, debian_data.json, high_freq_stopwords.json, master_df.json, ubuntu_data.json]
+- [ ] Download our acquired data stored in data folder [arch_linux_data.json, debian_data.json, high_freq_stopwords.json, master_df.json, ubuntu_data.json]
 - [ ] Download all helper function files [constants_prepare.py, explore.py, moddel.py]
-- [ ] Scrap notebooks (if desired, to dive deeper)
+- [ ] Scrap notebooks (if desired, to dive deeper) are available in individual_preparation_notebooks folder
 - [ ] Run the final report
