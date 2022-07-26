@@ -4,6 +4,8 @@
 ### Project Summary 
 
 In this NLP project, our team has scraped the top 3300 most-forked Linux-specific GitHub repositories to determine if we could build a model that can predict what programming language a repository  is using, based on the words contained with the README section. 
+
+You can view our team's presentation deck here: <a href="https://www.canva.com/design/DAFHJ5GSN5g/9c1YRQnS7EsITQZRsDDr6w/view?utm_content=DAFHJ5GSN5g&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink">Linux: Grep Language Count</a>
 <hr style="border-top: 10px groove blueviolet; margin-top: 1px; margin-bottom: 1px"></hr>
 
 ### Initial Questions
