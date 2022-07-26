@@ -197,7 +197,7 @@ def arch_subset():
     data as a Pandas DataFrame object.
     '''
     #calling in df
-    arch_df = pd.read_json('arch_linux_data.json')
+    arch_df = pd.read_json('data/arch_linux_data.json')
     #adding on cleaned/normalized data column:
     arch_df['cleaned_readme'] = arch_df.readme_contents.apply(c.clean_data)
     #adding on cleaned repo length
@@ -246,7 +246,7 @@ def debian_subset():
     This function uses the debian_data json file to get a subset of data for only debian linux distributions. It returns out the 
     data as a Pandas DataFrame object.
     '''
-    df_debian = pd.read_json('debian_data.json')
+    df_debian = pd.read_json('data/debian_data.json')
     df_debian = df_debian[df_debian.language.notnull()]
     return df_debian
 
@@ -255,7 +255,7 @@ def debian_corpus(df_debian):
     This function takes in the df_debian DataFrame and returns out a complete corpus list for resos in the debian subset.
     '''
     debian_corpus = ' '.join(df_debian['readme_contents'])
-    return c.clean_data(debian_corpus)
+    return pd.Series(c.clean_data(debian_corpus))
 
 def debian_unique_words_by_lang(df_debian):
     '''
@@ -272,7 +272,7 @@ def ubuntu_subset():
     data as a Pandas DataFrame object.
      '''
     #calling in df
-    ubuntu = pd.read_json('ubuntu_data.json')
+    ubuntu = pd.read_json('data/ubuntu_data.json')
     #adding on cleaned/normalized data column:
     ubuntu['cleaned_readme'] = ubuntu.readme_contents.apply(c.clean_data)
     #adding on cleaned repo length
