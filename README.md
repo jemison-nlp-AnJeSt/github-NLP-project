@@ -53,9 +53,6 @@ In differences of flavors, Archlinux will have more programming; less Shell than
 > - **Hypothesis 3 -**
 We have a theory that Ubuntu readme files may have more detail and length for new users.
 
-> - **Hypothesis 4-**
-Raspberry Pi will show up and be associated with Python language.
-
 
 ### Executive Summary - Conclusions & Next Steps
 Using the data, we found there were significant differences between the repos. Specifically in languages, README size, and unique words.
@@ -78,6 +75,6 @@ In order to reproduce this project, you will need all the necessary files listed
 - [x] Read this README.md
 - [ ] Have loaded all common DS libraries
 - [ ] Download our acquired data stored in data folder [arch_linux_data.json, debian_data.json, high_freq_stopwords.json, master_df.json, ubuntu_data.json]
-- [ ] Download all helper function files [constants_prepare.py, explore.py, moddel.py]
+- [ ] Download all helper function files [constants_prepare.py, explore.py, model.py]
 - [ ] Scrap notebooks (if desired, to dive deeper) are available in individual_preparation_notebooks folder
 - [ ] Run the final report
